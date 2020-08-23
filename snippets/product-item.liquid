@@ -1,0 +1,8 @@
+<div>
+    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+    {{ product.price | money }}
+    {% unless product.available %}
+        <br><strong>Sold out</strong>
+    {% endunless %}
+    <img src="{{ product.featured_image.src | img_url: "100x" }}" alt="{{ product.featured_image.alt }}">
+</div>
