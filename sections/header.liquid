@@ -22,12 +22,32 @@
     {% endif %}
 {% endif %}
 
-<h1>prueba</h1>
+<div>
+    <h1> {{ shop.name }}</h1>
+</div>
+
+<p>dasda</p>
+
+
+{% style %}
+    <style>
+    #background_color{
+        background-color: {{ section.settings.background_color }};
+    }
+    </style>
+{% endstyle %}
 
 
 {% schema %}
 {
-"name": "Header 3",
-"settings": []
+    "name": "Header",
+    "settings": [
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background color",
+            "default": "#ffffff"
+        }
+    ]
 }
 {% endschema %}
