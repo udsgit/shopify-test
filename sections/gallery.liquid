@@ -1,0 +1,112 @@
+<div class="gallery">
+    {% for block in section.blocks %}
+        {% if block.type == "image" %}
+            <div
+                    class="image-wrap"
+                        style="background-image: url('{{ block.settings.image | img_url: '500x' }}');">
+            </div>
+        {% endif %}
+
+        {% if block.type == "video" %}
+                {% if block.settings.video_url.type == "youtube" %}
+                    <iframe src="//www.youtube.com/embed/{{ block.settings.video_url.id }}?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+                {% endif %}
+                {% if block.settings.video_url.type == "vimeo" %}
+                    <iframe src="//player.vimeo.com/video/{{ block.settings.video_url.id }}?color={{ settings.color_button | remove: '#' }}&byline=0&portrait=0&badge=0" width="850" height="480"></iframe>
+                {% endif %}
+        {% endif %}
+    {% endfor %}
+
+</div>
+
+{% style %}
+    .image-wrap, iframe{
+        display: inline-block;
+        width:{{ section.settings.per-row }};
+        height: {{ section.settings.height }};
+        background-size: cover;
+    }
+{% endstyle %}
+
+{% schema %}
+    {
+        "name": "Gallery",
+        "settings": [
+                {
+                    "type":      "select",
+                    "id":        "per-row",
+                    "label":     "Images per row",
+                    "options": [
+                            {
+                                "value": "49.5%",
+                                "label": "2 per row"
+                            },
+                            {
+                                "value": "33%",
+                                "label": "3 per row"
+                            },
+                            {
+                                "value": "24.5%",
+                                "label": "4 per row"
+                            },
+                            {
+                                "value": "19.5%",
+                                "label": "5 per row"
+                            }
+                        ],
+                    "default":   "33%"
+                },
+                    {
+                        "type":      "select",
+                        "id":        "height",
+                        "label":     "Image Height",
+                            "options": [
+                                {
+                                    "value": "300px",
+                                    "label": "300px"
+                                },
+                                {
+                                    "value": "400px",
+                                    "label": "400px"
+                                },
+                                {
+                                    "value": "500px",
+                                    "label": "500px"
+                                }
+                            ],
+                        "default":   "500px"
+                    }
+            ],
+        "blocks" : [
+                        {
+                            "type": "image",
+                            "name": "Image Block",
+                            "settings": [
+                                {
+                                    "type": "image_picker",
+                                    "id": "image",
+                                    "label": "Image"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "video",
+                            "name": "Video Block",
+                                "settings": [
+                                {
+                                    "type": "video_url",
+                                    "id": "video_url",
+                                    "label": "Video Url",
+                                    "accept": ["youtube", "vimeo"]
+                                }
+                            ]
+                        }
+                ],
+            "presets": [
+                {
+                    "category" : "Custom Content",
+                    "name" : "Gallery"
+                }
+            ]
+        }
+{% endschema %}
